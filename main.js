@@ -10,6 +10,9 @@ var nave = {
 };
 
 var teclado = {};
+
+var disparos = [];
+
 //Variables para las imagenes
 var fondo;
 
@@ -68,12 +71,53 @@ function moverNave(){
 		nave.x += 6;
 		if(nave.x > limite) nave.x = limite;
 	}
+
+	if(teclado[32]){
+		//Disparos
+		if(!teclado.fire){
+			fire();
+			teclado.fire =  true;
+		}	
+	}else{
+		teclado.fire =  false;
+	}
+}
+
+function moverDisparos(){
+	for(var i in disparos){
+		var disparo = disparos[i];
+		disparo.y -= 2;
+	}
+	disparos = disparos.filter(function(){
+		return disparo.y > 0;
+	});
+}
+
+function fire(){
+	disparos.push({
+		x: nave.x + 20,
+		y: nave.y - 10,
+		width: 10,
+		height: 30
+	})
+}
+
+function drawShots(){
+	ctx.save();
+	ctx.fillStyle = 'white';
+	for( var i in disparos){
+		var disparo = disparos[i];
+		ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height);
+	}
+	ctx.restore();
 }
 
 function frameLoop(){
 	moverNave();
+	moverDisparos();
 	drawBackground();
 	drawSpaceShip();
+	drawShots();
 }
 
 //Ejecucion de funciones
