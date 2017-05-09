@@ -9,13 +9,14 @@ var nave = {
 	height: 50
 };
 
+var teclado {};
 //Variables para las imagenes
 var fondo;
 
 //Definicion de funciones
 function loadMedia(){
 	fondo = new Image();
-	fondo.src = 'https://68.media.tumblr.com/6d1529ed59f2d784dac516fa8e1adffb/tumblr_opol9givvR1qbg3s6o1_540.png';
+	fondo.src = 'background.png';
 	fondo.onload = function(){
 		var intervalo = window.setInterval(frameLoop, 1000/55);
 	}
@@ -32,6 +33,28 @@ function drawSpaceShip(){
 	ctx.restore();
 }
 
+function agregarEventosTeclado(){
+	agregarEvento(document, "keydown", function(e){
+		//Ponemos en true la tecla presionada
+		teclado[e.keycode] = true;
+	});
+
+	agregarEvento(document, "keyup", function(e){
+		//Ponemos en true la tecla presionada
+		teclado[e.keycode] = false;
+	});
+
+	function agregarEvento(elemento, nombreEvento, funcion){
+		if(elemento.addEventListener){
+			//Navegadores actuales
+			elemento.addEventListener(nombreEvento, funcion, false);
+		}else if(elemento.attachEvent){
+			//IE
+			elemento.attachEvent(nombreEvento, funcion);
+		}
+	}
+}
+
 function frameLoop(){
 	drawBackground();
 	drawSpaceShip();
@@ -39,3 +62,4 @@ function frameLoop(){
 
 //Ejecucion de funciones
 loadMedia();
+agregarEventosTeclado();
