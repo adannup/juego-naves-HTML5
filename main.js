@@ -9,7 +9,7 @@ var nave = {
 	height: 50
 };
 
-var teclado {};
+var teclado = {};
 //Variables para las imagenes
 var fondo;
 
@@ -36,12 +36,12 @@ function drawSpaceShip(){
 function agregarEventosTeclado(){
 	agregarEvento(document, "keydown", function(e){
 		//Ponemos en true la tecla presionada
-		teclado[e.keycode] = true;
+		teclado[e.keyCode] = true;
 	});
 
 	agregarEvento(document, "keyup", function(e){
-		//Ponemos en true la tecla presionada
-		teclado[e.keycode] = false;
+		//Ponemos en true la tecla dejo de ser presionada
+		teclado[e.keyCode] = false;
 	});
 
 	function agregarEvento(elemento, nombreEvento, funcion){
@@ -55,7 +55,23 @@ function agregarEventosTeclado(){
 	}
 }
 
+function moverNave(){
+	if(teclado[37]){
+		//Movimiento a la izquierda
+		nave.x -= 6;
+		if(nave.x < 0) nave.x = 0;
+	}
+
+	if(teclado[39]){
+		//Movimiento a la izquierda
+		var limite = canvas.width - nave.width;
+		nave.x += 6;
+		if(nave.x > limite) nave.x = limite;
+	}
+}
+
 function frameLoop(){
+	moverNave();
 	drawBackground();
 	drawSpaceShip();
 }
