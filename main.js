@@ -32,8 +32,8 @@ function drawEnemies(){
 	for(var i in enemigos){
 		var enemigo = enemigos[i];
 		ctx.save();
-		if(enemigo.estado = 'vivo') ctx.fillStyle = 'red';
-		if(enemigo.estado = 'muerto') ctx.fillStyle = 'black';
+		if(enemigo.estado ==='vivo') ctx.fillStyle = 'red';
+		if(enemigo.estado === 'muerto') ctx.fillStyle = 'black';
 		ctx.fillRect(enemigo.x, enemigo.y, enemigo.width, enemigo.height);
 	}
 }
@@ -96,6 +96,21 @@ function moverNave(){
 	}
 }
 
+function updateEnemies(){
+	if(juego.estado === 'iniciando'){
+		for(var i=0; i<9; i++){
+			enemigos.push({
+				x: 10 + (i*50),
+				y: 10,
+				height: 40,
+				width: 40,
+				estado: 'vivo'
+			});
+		}
+		juego.estado == 'jugando';
+	}
+}
+
 function moverDisparos(){
 	for(var i in disparos){
 		var disparo = disparos[i];
@@ -127,8 +142,10 @@ function drawShots(){
 
 function frameLoop(){
 	moverNave();
+	updateEnemies();
 	moverDisparos();
 	drawBackground();
+	drawEnemies();
 	drawSpaceShip();
 	drawShots();
 }
