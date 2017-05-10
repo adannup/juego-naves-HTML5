@@ -104,10 +104,20 @@ function updateEnemies(){
 				y: 10,
 				height: 40,
 				width: 40,
-				estado: 'vivo'
+				estado: 'vivo',
+				contador: 0
 			});
 		}
-		juego.estado == 'jugando';
+		juego.estado = 'jugando';
+	}
+
+	for(var i in enemigos){
+		var enemigo = enemigos[i];
+		if(!enemigo) continue;
+		if(enemigo && enemigo.estado === 'vivo'){
+			enemigo.contador++;
+			enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*6;
+		}
 	}
 }
 
