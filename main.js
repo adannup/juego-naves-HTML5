@@ -14,6 +14,7 @@ var juego = {
 	estado: 'iniciando'
 };
 var disparos = [];
+var disparosEnemigos = [];
 var enemigos = [];
 
 //Variables para las imagenes
@@ -93,6 +94,16 @@ function moverNave(){
 		}	
 	}else{
 		teclado.fire =  false;
+	}
+}
+
+function drawShotsEnemies(){
+	for(var i in disparosEnemigos){
+		var disparos = disparosEnemigos[i];
+		ctx.save();
+		ctx.fillStyle = 'yellow';
+		ctx.restore();
+		ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height);
 	}
 }
 
@@ -201,6 +212,7 @@ function frameLoop(){
 	moverDisparos();
 	drawBackground();
 	drawEnemies();
+	drawShotsEnemies();
 	drawSpaceShip();
 	drawShots();
 	verificarContacto();
