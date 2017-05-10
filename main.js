@@ -118,7 +118,18 @@ function updateEnemies(){
 			enemigo.contador++;
 			enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*6;
 		}
+		if(enemigo && enemigo.estado === 'hit'){
+			enemigo.contador++;
+			if(enemigo.contador >= 20){
+				enemigo.estado = 'muerto';
+				enemigo.contador = 0;
+			}
+		}
 	}
+	enemigos = enemigos.filter(function(e){
+		if(enemigo && enemigo.estado != 'muerto') return true;
+		return false;
+	});
 }
 
 function moverDisparos(){
@@ -170,6 +181,20 @@ function hit(a,b){
 	return hit;
 }
 
+function verificarContacto(){
+	for(var i in disparos){
+		var disparo = disparos[i];
+		for(j in enemigos){
+			var enemigo = enemigos[j];
+			if(hit(disparo, enemigo)){
+				enemigo.estado = 'hit';
+				enemigo.contador = 0;
+				console.log('hubo contacto');
+			}
+		}
+	}
+}
+
 function frameLoop(){
 	moverNave();
 	updateEnemies();
@@ -178,6 +203,7 @@ function frameLoop(){
 	drawEnemies();
 	drawSpaceShip();
 	drawShots();
+	verificarContacto();
 }
 
 //Ejecucion de funciones
