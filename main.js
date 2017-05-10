@@ -228,6 +228,15 @@ function verificarContacto(){
 			}
 		}
 	}
+
+	if(nave.estado === 'hit' || nave.estado === 'muerto') return;
+	for(var i in disparosEnemigos){
+		var disparo = disparosEnemigos[i];
+		if(hit(disparo, nave)){
+			nave.estado = 'hit';
+			console.log('contacto');
+		}
+	}
 }
 
 function aleatorio(inferior, superior){
