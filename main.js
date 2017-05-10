@@ -107,6 +107,16 @@ function drawShotsEnemies(){
 	}
 }
 
+function moverDisparosEnemigos(){
+	for(var i in disparosEnemigos){
+		var disparo = disparosEnemigos[i];
+		disparo.y += 3;
+	}
+	disparosEnemigos = disparosEnemigos.filter(function(disparo){
+		return disparo.y < canvas.height;
+	});
+}
+
 function updateEnemies(){
 	if(juego.estado === 'iniciando'){
 		for(var i=0; i<9; i++){
