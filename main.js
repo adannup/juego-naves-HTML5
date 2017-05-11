@@ -149,7 +149,7 @@ function updateEnemies(){
 	}
 
 	if(juego.estado === 'iniciando'){
-		for(var i=0; i<9; i++){
+		for(var i=0; i<10; i++){
 			enemigos.push({
 				x: 10 + (i*50),
 				y: 10,
@@ -251,6 +251,11 @@ function updateStateGame(){
 	}
 	if(textoRespuesta.contador >= 0){
 		textoRespuesta.contador++;
+	}
+	if((juego.estado === 'perdido' || juego.estado === 'victoria') && teclado[82]){
+		juego.estado = 'iniciando';
+		nave.estado = 'vivo';
+		textoRespuesta.contador = -1;
 	}
 }
 
